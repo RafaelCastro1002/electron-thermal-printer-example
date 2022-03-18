@@ -1,0 +1,1 @@
+In this repository use basic electron project with electron-pos-printer library to print on thermal printer with preview window and printer select
