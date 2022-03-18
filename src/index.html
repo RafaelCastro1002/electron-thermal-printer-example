@@ -26,14 +26,17 @@
       const $ = document.querySelector.bind(document);
 
       async function populateSelect() {
-        const { webContents } = require("electron");
+        const ipcRenderer = require("electron").ipcRenderer;
+        console.log("ipcRenderer: ", ipcRenderer);
 
-        const printers = await webContents.getPrintersAsync();
+        const printers = await ipcRenderer.invoke("get-printers");
+        console.log("Printers: ", printers);
 
         $("#select-printer").innerHTML = `
-            ${printers.map(
-              ({ name }, key) => `<option value="${key}">${option}</option>`
-            )}
+            ${printers.map((printer, key) => {
+              console.log(printer);
+              return `<option value="${printer.name}">${printer.name}</option>`;
+            })}
         `;
       }
 
@@ -68,7 +71,7 @@
         ipcRenderer.send("print", { data, printerName });
       }
 
-      window.onload = () => populateSelect();
+      window.onload = async () => await populateSelect();
     </script>
   </body>
 </html>

@@ -19,11 +19,14 @@ app.on("ready", () => {
   window.webContents.openDevTools();
 });
 
-ipcMain.on("print", async (_event, { data, printerName }) => {
+ipcMain.handle("get-printers", async (event) => {
+  console.log("buscando printers");
   const printers = await window.webContents.getPrintersAsync();
 
-  console.log(printers);
+  return printers;
+});
 
+ipcMain.on("print", async (_event, { data, printerName }) => {
   try {
     //printer
     PosPrinter.print(data, {
@@ -37,4 +40,4 @@ ipcMain.on("print", async (_event, { data, printerName }) => {
   }
 });
 
-export { ipcMain, ipcRenderer };
+export { ipcMain, ipcRenderer, window };
