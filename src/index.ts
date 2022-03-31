@@ -20,7 +20,7 @@ app.on("ready", () => {
 });
 
 ipcMain.handle("get-printers", async (event) => {
-  console.log("buscando printers");
+  console.log("Getting printers");
   const printers = await window.webContents.getPrintersAsync();
 
   return printers;
@@ -29,13 +29,17 @@ ipcMain.handle("get-printers", async (event) => {
 ipcMain.on("print", async (_event, { data, printerName }) => {
   try {
     //printer
-    PosPrinter.print(data, {
+    await PosPrinter.print(data, {
       printerName: printerName,
-      silent: false,
-      preview: true,
-      timeOutPerLine: 5000,
-    }).catch((err) => console.log(err));
+      silent: true,
+      preview: false,
+      timeOutPerLine: 1 * (1000 * 60), // 1 minute
+      margin: "50px 10px 10px 10px",
+    });
+
+    console.log("Success on print! :)");
   } catch (err) {
+    console.log("Ops! Something wrong...");
     console.log(err);
   }
 });
