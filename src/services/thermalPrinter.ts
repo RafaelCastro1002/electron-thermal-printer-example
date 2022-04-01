@@ -22,12 +22,8 @@ const ThermalPrinterService = async ({
       silent: true,
       preview: false,
       timeOutPerLine: 1 * (1000 * 60), // 1 minute
-      margin: `${verticalMargin} ${horizontalMargin}`,
+      margin: `${verticalMargin}px ${horizontalMargin}px`,
       width: `${widthPage}px`,
-      pageSize: {
-        height: 30,
-        width: 20,
-      },
     });
 
     console.log("Success on print! :)");
