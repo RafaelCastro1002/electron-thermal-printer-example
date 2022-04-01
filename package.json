@@ -1,21 +1,31 @@
 {
-  "name": "electron-thermal-printer-exemple",
+  "name": "electron_thermal_printer_exemple",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
+  "author": {
+    "name": "Rafael Castro",
+    "email": "rafael.castro1002@gmail.com"
+  },
   "scripts": {
     "start": "yarn build && electron ./dist/index.js",
-    "build": "tsc && yarn copyHtml",
-    "copyHtml": "cp ./src/index.html ./dist/index.html"
+    "build": "tsc",
+    "postbuild": "copyfiles -u 1 ./src/renderer/fonts/* ./src/renderer/* ./src/assets/* dist/",
+    "build:linux64": "electron-packager . thermal-printer-example --platform=linux --arch=x64 --out=./out/linux",
+    "build:win64": "electron-packager . thermal-printer-example --platform=win32 --arch=x64 --out=./out/win"
   },
   "dependencies": {
-    "electron": "^17.1.2",
     "electron-pos-printer": "github:Hubertformin/electron-pos-printer#a98a9be"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
+    "copyfiles": "^2.4.1",
+    "electron": "^17.1.2",
+    "electron-builder": "^22.14.13",
+    "electron-packager": "^15.4.0",
+    "electron-winstaller": "^5.0.0",
     "eslint": "^7.32.0",
     "typescript": "^4.6.2"
   }

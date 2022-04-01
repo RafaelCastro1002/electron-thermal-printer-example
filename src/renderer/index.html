@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Thermal Printer Example</title>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="container-inputs">
+        <div class="input-content">
+          <label>Selecione a impressora:</label>
+          <select id="select-printer"></select>
+        </div>
+
+        <div class="input-content">
+          <label>Largura da página (pixels):</label>
+          <input
+            id="print-sheet-width"
+            type="text"
+            placeholder="Print sheet width"
+            value="200"
+          />
+        </div>
+
+        <div class="input-content">
+          <label>Margem vertical:</label>
+          <input
+            id="vertical-margin"
+            type="text"
+            placeholder="Vertical margin"
+            value="0"
+          />
+        </div>
+
+        <div class="input-content">
+          <label>Margem horizontal:</label>
+          <input
+            id="horizontal-margin"
+            type="text"
+            placeholder="Horizontal margin"
+            value="0"
+          />
+        </div>
+      </div>
+
+      <button onclick="printData()">Print</button>
+    </div>
+
+    <script>
+      const $ = document.querySelector.bind(document);
+
+      async function populateSelect() {
+        const ipcRenderer = require("electron").ipcRenderer;
+        console.log("ipcRenderer: ", ipcRenderer);
+
+        const printers = await ipcRenderer.invoke("get-printers");
+        console.log("Printers: ", printers);
+
+        $("#select-printer").innerHTML = `
+            ${printers.map((printer, key) => {
+              console.log(printer);
+              return `<option value="${printer.name}">${printer.name}</option>`;
+            })}
+        `;
+      }
+
+      function printData() {
+        const ipcRenderer = require("electron").ipcRenderer;
+
+        const printerName = $("#select-printer").value;
+        const widthPage = $("#print-sheet-width").value;
+        const verticalMargin = $("#vertical-margin").value;
+        const horizontalMargin = $("#horizontal-margin").value;
+
+        ipcRenderer.send("print", {
+          printerName,
+          widthPage,
+          verticalMargin,
+          horizontalMargin,
+        });
+      }
+
+      window.onload = async () => await populateSelect();
+    </script>
+  </body>
+</html>

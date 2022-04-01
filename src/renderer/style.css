@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'title';
+    src: url(./fonts/Roboto-Bold.ttf);
+}
+
+@font-face {
+    font-family: 'regular';
+    src: url(./fonts/Roboto-Regular.ttf);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    width: 95%;
+    margin: 10px auto
+}
+
+#container-inputs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.input-content {
+    margin-right: 0.5em;
+}
+
+label {
+    font-family: 'regular';
+    font-size: 80%;
+    color: rgba(0, 0, 0, 0.76)
+}
+
+select, input {
+    display: block;
+    width: 30vw;
+    background-color: white;
+    font-family: 'regular';
+    color: rgba(0, 0, 0, 0.767);
+    border: 1px solid rgba(0, 0, 0, 0.513);
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 5px 10px
+}
+
+button {
+    margin-top: 1.5em;
+    font-family: 'title';
+    padding: 10px 60px;
+    background-color: #1246a6;
+    border: none;
+    color: white;
+    border-radius: 3px;
+    float: right
+}
+
+@media screen and (max-width: 600px) {
+    #container {
+        width: 95% !important;
+        margin: 20px auto
+    }
+
+    #container-inputs {
+        display: inline;
+        box-sizing: border-box;
+    }
+
+    select, input {
+        display: inline;
+        width: 100%;
+    }
+
+    .input-content {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
