@@ -20,9 +20,9 @@ const ThermalPrinterService = async ({
     await PosPrinter.print(data, {
       printerName: printerName,
       silent: true,
-      preview: false,
+      preview: true,
       timeOutPerLine: 1 * (1000 * 60), // 1 minute
-      margin: `${verticalMargin} ${horizontalMargin}`,
+      margin: `${verticalMargin}px ${horizontalMargin}px`,
       width: `${widthPage}px`,
       pageSize: {
         height: 30,
